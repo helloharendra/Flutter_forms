@@ -29,17 +29,25 @@ class MyForm extends StatefulWidget {
 }
 
 class _MyFormState extends State<MyForm> {
-  String text = 'submitted';
+  final formkey = GlobalKey<FormState>();
+
+  String resetTxt = 'Reset';
+  String preSubmitTxt = 'Submit';
+  String submitTxt = 'Submitted';
+
   void submit() {
-    Text(text);
     setState(() {});
   }
 
-  final _formkey = GlobalKey<FormState>();
+  void reset() {
+    submitTxt = preSubmitTxt;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formkey,
+      key: formkey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -75,13 +83,24 @@ class _MyFormState extends State<MyForm> {
                 hintText: 'Enter full address ',
                 labelText: 'Address'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: ElevatedButton(
-              onPressed: () => submit(),
-              child: const Text('submit'),
-            ),
-          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: ElevatedButton(
+                  onPressed: () => submit(),
+                  child: Text(preSubmitTxt),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: ElevatedButton(
+                  onPressed: () => submit(),
+                  child: Text(resetTxt),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
